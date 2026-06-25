@@ -1,0 +1,6 @@
+results/
+traces/
+*.nsys-rep
+*.sqlite
+*.qdrep
+__pycache__/

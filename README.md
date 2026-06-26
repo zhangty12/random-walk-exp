@@ -3,6 +3,10 @@
 This directory contains a focused benchmark for `torch_cluster.random_walk` on
 CUDA GPUs such as NVIDIA A100.
 
+It also contains a configurable comparison benchmark for a custom CUDA/C++
+node2vec random-walk implementation that uses sorted CSR adjacency lists and
+binary search for the second-order adjacency check.
+
 ## Quick Start
 
 Install PyTorch and `torch-cluster` wheels that match the CUDA runtime on the
@@ -110,3 +114,58 @@ Open the emitted JSON trace in `chrome://tracing` or Perfetto.
   Python API overhead.
 - Increase `--num-starts` enough to make each timed call large relative to
   Python launch overhead.
+
+## Binary-Search CSR Implementation
+
+The custom implementation lives in:
+
+- `csrc/binary_search_random_walk.cpp`
+- `csrc/binary_search_random_walk_cuda.cu`
+- `custom_random_walk.py`
+
+It accepts CSR inputs:
+
+```text
+rowptr: shape [num_nodes + 1], dtype torch.long, CUDA
+col:    shape [num_edges], dtype torch.long, CUDA
+start:  shape [num_walks], dtype torch.long, CUDA
+```
+
+The comparison script sorts `col[rowptr[x]:rowptr[x + 1]]` once for every
+vertex, then benchmarks only the random-walk kernel. The sorting latency is
+reported separately as `sort_csr_ms`.
+
+Run the full configured comparison:
+
+```bash
+python3 compare_random_walk.py --config compare_random_walk_config.json
+```
+
+The config file controls graph families, graph sizes, concurrent walks per run,
+`p/q` combinations, warmup/iteration counts, and output paths. The default
+configuration tests reciprocal-edge random graphs with small average degree and
+Barabasi-Albert-style power-law graphs:
+
+```json
+{
+  "benchmark": {
+    "modes": ["library", "binary_search"],
+    "walk_length": 20,
+    "linear_threshold": 32
+  },
+  "node2vec": [
+    {"p": 1.0, "q": 1.0},
+    {"p": 0.25, "q": 4.0},
+    {"p": 1.0, "q": 2.0},
+    {"p": 4.0, "q": 0.25}
+  ]
+}
+```
+
+For the node2vec path, the custom kernel samples a candidate neighbor of the
+current vertex and checks whether that candidate is adjacent to the previous
+vertex. If the previous vertex degree is below `linear_threshold`, it uses a
+linear scan over the previous vertex's adjacency list; otherwise it uses binary
+search over the sorted list. The generated benchmark graphs include reciprocal
+edges so this adjacency check is comparable with the existing
+`torch_cluster.random_walk` behavior on undirected graph semantics.

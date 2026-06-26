@@ -1,0 +1,71 @@
+{
+  "device": "cuda:0",
+  "seed": 12345,
+  "extension": {
+    "name": "binary_search_random_walk_ext",
+    "verbose": false,
+    "extra_cuda_cflags": []
+  },
+  "benchmark": {
+    "modes": ["library", "binary_search"],
+    "warmup": 10,
+    "iters": 50,
+    "walk_length": 20,
+    "start_mode": "random",
+    "linear_threshold": 32
+  },
+  "node2vec": [
+    {"p": 1.0, "q": 1.0},
+    {"p": 0.25, "q": 4.0},
+    {"p": 1.0, "q": 2.0},
+    {"p": 4.0, "q": 0.25}
+  ],
+  "graphs": [
+    {
+      "name": "random_10k_d8",
+      "type": "random",
+      "num_nodes": 10000,
+      "avg_degree": 8,
+      "num_starts": 65536
+    },
+    {
+      "name": "random_50k_d8",
+      "type": "random",
+      "num_nodes": 50000,
+      "avg_degree": 8,
+      "num_starts": 131072
+    },
+    {
+      "name": "random_200k_d8",
+      "type": "random",
+      "num_nodes": 200000,
+      "avg_degree": 8,
+      "num_starts": 262144
+    },
+    {
+      "name": "powerlaw_10k_m4",
+      "type": "power_law",
+      "num_nodes": 10000,
+      "attachment_edges": 4,
+      "num_starts": 65536
+    },
+    {
+      "name": "powerlaw_50k_m4",
+      "type": "power_law",
+      "num_nodes": 50000,
+      "attachment_edges": 4,
+      "num_starts": 131072
+    },
+    {
+      "name": "powerlaw_100k_m4",
+      "type": "power_law",
+      "num_nodes": 100000,
+      "attachment_edges": 4,
+      "num_starts": 262144
+    }
+  ],
+  "output": {
+    "json": "results/compare_random_walk.json",
+    "csv": "results/compare_random_walk.csv"
+  }
+}

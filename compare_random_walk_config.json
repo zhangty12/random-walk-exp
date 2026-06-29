@@ -7,7 +7,7 @@
     "extra_cuda_cflags": []
   },
   "benchmark": {
-    "modes": ["library", "binary_search"],
+    "modes": ["library", "adaptive"],
     "warmup": 10,
     "iters": 50,
     "walk_length": 20,

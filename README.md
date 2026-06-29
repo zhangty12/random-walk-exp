@@ -3,9 +3,9 @@
 This directory contains a focused benchmark for `torch_cluster.random_walk` on
 CUDA GPUs such as NVIDIA A100.
 
-It also contains a configurable comparison benchmark for a custom CUDA/C++
+It also contains configurable comparison benchmarks for a custom CUDA/C++
 node2vec random-walk implementation that uses sorted CSR adjacency lists and
-binary search for the second-order adjacency check.
+threshold-adaptive second-order adjacency checks.
 
 ## Quick Start
 
@@ -115,7 +115,7 @@ Open the emitted JSON trace in `chrome://tracing` or Perfetto.
 - Increase `--num-starts` enough to make each timed call large relative to
   Python launch overhead.
 
-## Binary-Search CSR Implementation
+## Adaptive CSR Implementation
 
 The custom implementation lives in:
 
@@ -149,7 +149,7 @@ Barabasi-Albert-style power-law graphs:
 ```json
 {
   "benchmark": {
-    "modes": ["library", "binary_search"],
+    "modes": ["library", "adaptive"],
     "walk_length": 20,
     "linear_threshold": 32
   },
@@ -162,10 +162,46 @@ Barabasi-Albert-style power-law graphs:
 }
 ```
 
-For the node2vec path, the custom kernel samples a candidate neighbor of the
-current vertex and checks whether that candidate is adjacent to the previous
-vertex. If the previous vertex degree is below `linear_threshold`, it uses a
-linear scan over the previous vertex's adjacency list; otherwise it uses binary
-search over the sorted list. The generated benchmark graphs include reciprocal
-edges so this adjacency check is comparable with the existing
-`torch_cluster.random_walk` behavior on undirected graph semantics.
+For the node2vec path, `linear_threshold` is the degree cutoff `B`. Vertices
+with degree greater than `B` are treated as long rows; all other positive-degree
+vertices are treated as short rows.
+
+- If both the current vertex `u` and previous vertex `t` are long, the kernel
+  keeps rejection sampling and uses binary search in `t`'s sorted row.
+- If `u` is long and `t` is short, the kernel keeps rejection sampling and scans
+  `t`'s row linearly.
+- If `u` is short and `t` is long, the kernel computes all candidate weights for
+  neighbors of `u` with binary searches into `t`, then samples directly.
+- If both rows are short, the kernel computes candidate weights with a merge
+  over the two sorted rows, then samples directly.
+
+The generated benchmark graphs include reciprocal edges so this adjacency check
+is comparable with the existing `torch_cluster.random_walk` behavior on
+undirected graph semantics.
+
+## Real-World Power-Law Comparison
+
+Use `compare_real_powerlaw_random_walk.py` to run the same library-vs-custom
+comparison on edge-list data. By default it downloads the SNAP Twitter combined
+ego-network edge list, adds reciprocal edges, removes duplicate directed edges,
+sorts the CSR rows once, and benchmarks the library and adaptive kernels:
+
+```bash
+python3 compare_real_powerlaw_random_walk.py \
+  --dataset twitter_combined \
+  --device cuda:0 \
+  --num-starts 262144 \
+  --walk-length 20 \
+  --linear-threshold 32 \
+  --json results/twitter_random_walk.json \
+  --csv results/twitter_random_walk.csv
+```
+
+To use another real graph, pass a whitespace-delimited local edge list:
+
+```bash
+python3 compare_real_powerlaw_random_walk.py \
+  --edge-list data/my_graph.txt.gz \
+  --graph-name my_graph \
+  --device cuda:0
+```

@@ -70,7 +70,7 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
     m.def(
         "random_walk",
         &random_walk,
-        "node2vec random walk with sorted-CSR binary-search adjacency checks (CUDA)",
+        "node2vec random walk with threshold-adaptive sorted-CSR adjacency checks (CUDA)",
         py::arg("rowptr"),
         py::arg("col"),
         py::arg("start"),

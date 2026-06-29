@@ -417,7 +417,7 @@ def print_summary(results: Sequence[Dict[str, Any]]) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Compare torch_cluster.random_walk with a sorted-CSR binary-search CUDA implementation."
+        description="Compare torch_cluster.random_walk with a threshold-adaptive sorted-CSR CUDA implementation."
     )
     parser.add_argument("--config", default="compare_random_walk_config.json")
     parser.add_argument("--device", default=None, help="Override config device, e.g. cuda:1.")
@@ -452,7 +452,7 @@ def main() -> None:
     )
 
     bench_cfg = config.get("benchmark", {})
-    modes = list(bench_cfg.get("modes", ["library", "binary_search"]))
+    modes = list(bench_cfg.get("modes", ["library", "adaptive"]))
     warmup = int(bench_cfg.get("warmup", 10))
     iters = int(bench_cfg.get("iters", 50))
     walk_length = int(bench_cfg.get("walk_length", 20))
@@ -518,8 +518,8 @@ def main() -> None:
                     q=q,
                     num_nodes=graph["num_nodes"],
                 )
-            if "binary_search" in modes:
-                callables["binary_search"] = make_binary_search_callable(
+            for custom_mode in [mode for mode in modes if mode in ("adaptive", "binary_search")]:
+                callables[custom_mode] = make_binary_search_callable(
                     module=module,
                     rowptr=graph["rowptr"],
                     col=sorted_col,

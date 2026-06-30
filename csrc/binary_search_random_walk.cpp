@@ -1,9 +1,56 @@
 #include <torch/extension.h>
 
+#include <ATen/cuda/CUDAContext.h>
+#include <c10/cuda/CUDAException.h>
+#include <c10/cuda/CUDAGuard.h>
+#include <cuda_runtime_api.h>
+
 #include <cstdint>
 #include <vector>
 
-torch::Tensor sort_csr_col_cuda(torch::Tensor rowptr, torch::Tensor col);
+void sort_csr_col_cuda_launcher(
+    const int64_t* rowptr,
+    int64_t* sorted_col,
+    int64_t* edge_rows,
+    int64_t num_nodes,
+    int64_t num_edges,
+    cudaStream_t stream);
+
+void random_walk_binary_search_cuda_launcher(
+    const int64_t* rowptr,
+    const int64_t* col,
+    const int64_t* start,
+    int64_t* node_out,
+    int64_t* edge_out,
+    int64_t num_walks,
+    int64_t walk_length,
+    double p,
+    double q,
+    int64_t linear_threshold,
+    unsigned long long seed,
+    cudaStream_t stream);
+
+torch::Tensor sort_csr_col_cuda(torch::Tensor rowptr, torch::Tensor col) {
+    const c10::cuda::CUDAGuard device_guard(rowptr.device());
+    auto sorted_col = col.clone();
+    const int64_t num_nodes = rowptr.numel() - 1;
+    const int64_t num_edges = col.numel();
+    if (num_nodes == 0 || num_edges == 0) {
+        return sorted_col;
+    }
+
+    auto edge_rows = at::empty_like(sorted_col);
+    auto stream = at::cuda::getCurrentCUDAStream();
+    sort_csr_col_cuda_launcher(
+        rowptr.data_ptr<int64_t>(),
+        sorted_col.data_ptr<int64_t>(),
+        edge_rows.data_ptr<int64_t>(),
+        num_nodes,
+        num_edges,
+        stream.stream());
+    C10_CUDA_KERNEL_LAUNCH_CHECK();
+    return sorted_col;
+}
 
 std::vector<torch::Tensor> random_walk_binary_search_cuda(
     torch::Tensor rowptr,
@@ -13,7 +60,33 @@ std::vector<torch::Tensor> random_walk_binary_search_cuda(
     double p,
     double q,
     int64_t linear_threshold,
-    int64_t seed);
+    int64_t seed) {
+    const c10::cuda::CUDAGuard device_guard(rowptr.device());
+    const int64_t num_walks = start.numel();
+    auto node_out = at::empty({num_walks, walk_length + 1}, start.options());
+    auto edge_out = at::empty({num_walks, walk_length}, start.options());
+
+    if (num_walks == 0) {
+        return {node_out, edge_out};
+    }
+
+    auto stream = at::cuda::getCurrentCUDAStream();
+    random_walk_binary_search_cuda_launcher(
+        rowptr.data_ptr<int64_t>(),
+        col.data_ptr<int64_t>(),
+        start.data_ptr<int64_t>(),
+        node_out.data_ptr<int64_t>(),
+        edge_out.data_ptr<int64_t>(),
+        num_walks,
+        walk_length,
+        p,
+        q,
+        linear_threshold,
+        static_cast<unsigned long long>(seed),
+        stream.stream());
+    C10_CUDA_KERNEL_LAUNCH_CHECK();
+    return {node_out, edge_out};
+}
 
 namespace {
 

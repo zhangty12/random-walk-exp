@@ -1,9 +1,5 @@
-#include <ATen/ATen.h>
-#include <ATen/cuda/CUDAContext.h>
-#include <c10/cuda/CUDAException.h>
-#include <c10/cuda/CUDAGuard.h>
+#include <cuda_runtime_api.h>
 #include <curand_kernel.h>
-#include <torch/types.h>
 #include <thrust/device_ptr.h>
 #include <thrust/execution_policy.h>
 #include <thrust/iterator/zip_iterator.h>
@@ -13,7 +9,6 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
-#include <vector>
 
 namespace {
 
@@ -336,79 +331,60 @@ __global__ void random_walk_node2vec_kernel(
 
 }  // namespace
 
-torch::Tensor sort_csr_col_cuda(torch::Tensor rowptr, torch::Tensor col) {
-    const c10::cuda::CUDAGuard device_guard(rowptr.device());
-    auto sorted_col = col.clone();
-    const int64_t num_nodes = rowptr.numel() - 1;
-    const int64_t num_edges = col.numel();
-    if (num_nodes == 0 || num_edges == 0) {
-        return sorted_col;
-    }
-
-    auto edge_rows = at::empty_like(sorted_col);
+void sort_csr_col_cuda_launcher(
+    const int64_t* rowptr,
+    int64_t* sorted_col,
+    int64_t* edge_rows,
+    int64_t num_nodes,
+    int64_t num_edges,
+    cudaStream_t stream) {
     const int64_t blocks = std::min<int64_t>((num_nodes + kThreads - 1) / kThreads, 4096);
-    auto stream = at::cuda::getCurrentCUDAStream();
-    fill_edge_rows_kernel<<<blocks, kThreads, 0, stream.stream()>>>(
-        rowptr.data_ptr<int64_t>(),
-        edge_rows.data_ptr<int64_t>(),
-        num_nodes);
-    C10_CUDA_KERNEL_LAUNCH_CHECK();
+    fill_edge_rows_kernel<<<blocks, kThreads, 0, stream>>>(rowptr, edge_rows, num_nodes);
 
-    auto row_begin = thrust::device_pointer_cast(edge_rows.data_ptr<int64_t>());
-    auto col_begin = thrust::device_pointer_cast(sorted_col.data_ptr<int64_t>());
+    auto row_begin = thrust::device_pointer_cast(edge_rows);
+    auto col_begin = thrust::device_pointer_cast(sorted_col);
     auto zip_begin = thrust::make_zip_iterator(thrust::make_tuple(row_begin, col_begin));
     auto zip_end = zip_begin + num_edges;
-    thrust::sort(thrust::cuda::par.on(stream.stream()), zip_begin, zip_end, RowColLess());
-    C10_CUDA_KERNEL_LAUNCH_CHECK();
-    return sorted_col;
+    thrust::sort(thrust::cuda::par.on(stream), zip_begin, zip_end, RowColLess());
 }
 
-std::vector<torch::Tensor> random_walk_binary_search_cuda(
-    torch::Tensor rowptr,
-    torch::Tensor col,
-    torch::Tensor start,
+void random_walk_binary_search_cuda_launcher(
+    const int64_t* rowptr,
+    const int64_t* col,
+    const int64_t* start,
+    int64_t* node_out,
+    int64_t* edge_out,
+    int64_t num_walks,
     int64_t walk_length,
     double p,
     double q,
     int64_t linear_threshold,
-    int64_t seed) {
-    const c10::cuda::CUDAGuard device_guard(rowptr.device());
-    const int64_t num_walks = start.numel();
-    auto node_out = at::empty({num_walks, walk_length + 1}, start.options());
-    auto edge_out = at::empty({num_walks, walk_length}, start.options());
-
-    if (num_walks == 0) {
-        return {node_out, edge_out};
-    }
-
+    unsigned long long seed,
+    cudaStream_t stream) {
     const int64_t blocks = (num_walks + kThreads - 1) / kThreads;
-    auto stream = at::cuda::getCurrentCUDAStream();
-    const auto kernel_seed = static_cast<unsigned long long>(seed);
 
     if (p == 1.0 && q == 1.0) {
-        random_walk_uniform_kernel<<<blocks, kThreads, 0, stream.stream()>>>(
-            rowptr.data_ptr<int64_t>(),
-            col.data_ptr<int64_t>(),
-            start.data_ptr<int64_t>(),
-            node_out.data_ptr<int64_t>(),
-            edge_out.data_ptr<int64_t>(),
+        random_walk_uniform_kernel<<<blocks, kThreads, 0, stream>>>(
+            rowptr,
+            col,
+            start,
+            node_out,
+            edge_out,
             num_walks,
             walk_length,
-            kernel_seed);
+            seed);
     } else {
-        random_walk_node2vec_kernel<<<blocks, kThreads, 0, stream.stream()>>>(
-            rowptr.data_ptr<int64_t>(),
-            col.data_ptr<int64_t>(),
-            start.data_ptr<int64_t>(),
-            node_out.data_ptr<int64_t>(),
-            edge_out.data_ptr<int64_t>(),
+        random_walk_node2vec_kernel<<<blocks, kThreads, 0, stream>>>(
+            rowptr,
+            col,
+            start,
+            node_out,
+            edge_out,
             num_walks,
             walk_length,
             p,
             q,
             linear_threshold,
-            kernel_seed);
+            seed);
     }
-    C10_CUDA_KERNEL_LAUNCH_CHECK();
-    return {node_out, edge_out};
 }

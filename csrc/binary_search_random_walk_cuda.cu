@@ -4,9 +4,11 @@
 #include <c10/cuda/CUDAGuard.h>
 #include <curand_kernel.h>
 #include <torch/types.h>
+#include <thrust/device_ptr.h>
 #include <thrust/execution_policy.h>
 #include <thrust/iterator/zip_iterator.h>
 #include <thrust/sort.h>
+#include <thrust/tuple.h>
 
 #include <algorithm>
 #include <cmath>

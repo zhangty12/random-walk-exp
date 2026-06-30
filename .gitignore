@@ -1,4 +1,3 @@
-results/
 traces/
 *.nsys-rep
 *.sqlite

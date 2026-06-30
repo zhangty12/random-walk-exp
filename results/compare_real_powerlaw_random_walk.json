@@ -1,0 +1,329 @@
+{
+  "args": {
+    "csv": "results/compare_real_powerlaw_random_walk.csv",
+    "data_dir": "data/real_powerlaw",
+    "dataset": "twitter_combined",
+    "device": "cuda:0",
+    "directed": false,
+    "edge_list": null,
+    "extension_name": "binary_search_random_walk_ext",
+    "extension_verbose": false,
+    "force_download": false,
+    "graph_name": null,
+    "iters": 50,
+    "json": "results/compare_real_powerlaw_random_walk.json",
+    "keep_duplicates": false,
+    "keep_self_loops": false,
+    "linear_threshold": 32,
+    "max_raw_edges": null,
+    "modes": [
+      "adaptive"
+    ],
+    "num_starts": 262144,
+    "pq": [
+      [
+        1.0,
+        1.0
+      ],
+      [
+        0.25,
+        4.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        4.0,
+        0.25
+      ]
+    ],
+    "seed": 12345,
+    "start_mode": "random",
+    "url": null,
+    "walk_length": 20,
+    "warmup": 10
+  },
+  "dataset_catalog": {
+    "twitter_combined": {
+      "description": "SNAP Social circles: Twitter combined ego-network edge list",
+      "url": "https://snap.stanford.edu/data/twitter_combined.txt.gz"
+    }
+  },
+  "environment": {
+    "cuda_capability": "8.0",
+    "cuda_device_name": "NVIDIA A100-PCIE-40GB",
+    "cuda_total_memory_gb": 39.516,
+    "device": "cuda:0",
+    "timestamp": "2026-06-30T13:10:06",
+    "torch": "2.11.0+cu128",
+    "torch_cluster": null,
+    "torch_cuda": "12.8"
+  },
+  "graph": {
+    "avg_degree": 33.01837502767324,
+    "degree_max": 3383,
+    "degree_mean": 33.01837502767324,
+    "degree_min": 1,
+    "degree_p50": 15.0,
+    "degree_p90": 76.0,
+    "degree_p95": 117.0,
+    "degree_p99": 264.0,
+    "graph_type": "real_power_law",
+    "num_edges": 2684592,
+    "num_nodes": 81306,
+    "parse_stats": {
+      "duplicate_edges_removed": 2156896,
+      "keep_duplicates": false,
+      "make_undirected": true,
+      "raw_edges_read": 2420766,
+      "skipped_self_loops": 22
+    }
+  },
+  "results": [
+    {
+      "config": {
+        "avg_degree": 33.01837502767324,
+        "dataset_source": "https://snap.stanford.edu/data/twitter_combined.txt.gz",
+        "degree_max": 3383,
+        "degree_mean": 33.01837502767324,
+        "degree_p50": 15.0,
+        "degree_p90": 76.0,
+        "degree_p95": 117.0,
+        "degree_p99": 264.0,
+        "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
+        "graph_build_seconds": 5.2507628300227225,
+        "graph_name": "twitter_combined",
+        "graph_type": "real_power_law",
+        "keep_duplicates": false,
+        "linear_threshold": 32,
+        "make_undirected": true,
+        "num_edges": 2684592,
+        "num_nodes": 81306,
+        "num_starts": 262144,
+        "p": 1.0,
+        "q": 1.0,
+        "sort_csr_ms": 10.56662368774414,
+        "start_mode": "random",
+        "walk_length": 20
+      },
+      "mode": "adaptive",
+      "stats": {
+        "iters": 50,
+        "latency_ms_max": 1.70905601978302,
+        "latency_ms_mean": 1.6632832026481628,
+        "latency_ms_min": 1.6209919452667236,
+        "latency_ms_p50": 1.6599040031433105,
+        "latency_ms_p90": 1.689907193183899,
+        "latency_ms_p95": 1.694259226322174,
+        "latency_ms_p99": 1.704038381576538,
+        "latency_ms_std": 0.019902783441504444,
+        "output": [
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              21
+            ]
+          },
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              20
+            ]
+          }
+        ],
+        "peak_memory_gb": 0.202719,
+        "transitions_per_second_p50": 3158544102.5937133,
+        "walks_per_second_p50": 157927205.12968567,
+        "warmup": 10
+      }
+    },
+    {
+      "config": {
+        "avg_degree": 33.01837502767324,
+        "dataset_source": "https://snap.stanford.edu/data/twitter_combined.txt.gz",
+        "degree_max": 3383,
+        "degree_mean": 33.01837502767324,
+        "degree_p50": 15.0,
+        "degree_p90": 76.0,
+        "degree_p95": 117.0,
+        "degree_p99": 264.0,
+        "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
+        "graph_build_seconds": 5.2507628300227225,
+        "graph_name": "twitter_combined",
+        "graph_type": "real_power_law",
+        "keep_duplicates": false,
+        "linear_threshold": 32,
+        "make_undirected": true,
+        "num_edges": 2684592,
+        "num_nodes": 81306,
+        "num_starts": 262144,
+        "p": 0.25,
+        "q": 4.0,
+        "sort_csr_ms": 10.56662368774414,
+        "start_mode": "random",
+        "walk_length": 20
+      },
+      "mode": "adaptive",
+      "stats": {
+        "iters": 50,
+        "latency_ms_max": 16.574464797973633,
+        "latency_ms_mean": 15.716577281951905,
+        "latency_ms_min": 15.440896034240723,
+        "latency_ms_p50": 15.662591934204102,
+        "latency_ms_p90": 15.98361587524414,
+        "latency_ms_p95": 16.08755216598511,
+        "latency_ms_p99": 16.39031852722168,
+        "latency_ms_std": 0.24386005516846362,
+        "output": [
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              21
+            ]
+          },
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              20
+            ]
+          }
+        ],
+        "peak_memory_gb": 0.282797,
+        "transitions_per_second_p50": 334738976.9218563,
+        "walks_per_second_p50": 16736948.846092815,
+        "warmup": 10
+      }
+    },
+    {
+      "config": {
+        "avg_degree": 33.01837502767324,
+        "dataset_source": "https://snap.stanford.edu/data/twitter_combined.txt.gz",
+        "degree_max": 3383,
+        "degree_mean": 33.01837502767324,
+        "degree_p50": 15.0,
+        "degree_p90": 76.0,
+        "degree_p95": 117.0,
+        "degree_p99": 264.0,
+        "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
+        "graph_build_seconds": 5.2507628300227225,
+        "graph_name": "twitter_combined",
+        "graph_type": "real_power_law",
+        "keep_duplicates": false,
+        "linear_threshold": 32,
+        "make_undirected": true,
+        "num_edges": 2684592,
+        "num_nodes": 81306,
+        "num_starts": 262144,
+        "p": 1.0,
+        "q": 2.0,
+        "sort_csr_ms": 10.56662368774414,
+        "start_mode": "random",
+        "walk_length": 20
+      },
+      "mode": "adaptive",
+      "stats": {
+        "iters": 50,
+        "latency_ms_max": 7.90015983581543,
+        "latency_ms_mean": 7.782420434951782,
+        "latency_ms_min": 7.6175360679626465,
+        "latency_ms_p50": 7.797759771347046,
+        "latency_ms_p90": 7.843430280685425,
+        "latency_ms_p95": 7.864678311347961,
+        "latency_ms_p99": 7.898654661178589,
+        "latency_ms_std": 0.06052435311586317,
+        "output": [
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              21
+            ]
+          },
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              20
+            ]
+          }
+        ],
+        "peak_memory_gb": 0.282797,
+        "transitions_per_second_p50": 672357209.4725232,
+        "walks_per_second_p50": 33617860.47362616,
+        "warmup": 10
+      }
+    },
+    {
+      "config": {
+        "avg_degree": 33.01837502767324,
+        "dataset_source": "https://snap.stanford.edu/data/twitter_combined.txt.gz",
+        "degree_max": 3383,
+        "degree_mean": 33.01837502767324,
+        "degree_p50": 15.0,
+        "degree_p90": 76.0,
+        "degree_p95": 117.0,
+        "degree_p99": 264.0,
+        "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
+        "graph_build_seconds": 5.2507628300227225,
+        "graph_name": "twitter_combined",
+        "graph_type": "real_power_law",
+        "keep_duplicates": false,
+        "linear_threshold": 32,
+        "make_undirected": true,
+        "num_edges": 2684592,
+        "num_nodes": 81306,
+        "num_starts": 262144,
+        "p": 4.0,
+        "q": 0.25,
+        "sort_csr_ms": 10.56662368774414,
+        "start_mode": "random",
+        "walk_length": 20
+      },
+      "mode": "adaptive",
+      "stats": {
+        "iters": 50,
+        "latency_ms_max": 8.020992279052734,
+        "latency_ms_mean": 7.830405101776123,
+        "latency_ms_min": 7.754752159118652,
+        "latency_ms_p50": 7.811071872711182,
+        "latency_ms_p90": 7.912550354003907,
+        "latency_ms_p95": 7.949568080902099,
+        "latency_ms_p99": 7.989882922172546,
+        "latency_ms_std": 0.06201979703906162,
+        "output": [
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              21
+            ]
+          },
+          {
+            "device": "cuda:0",
+            "dtype": "torch.int64",
+            "shape": [
+              262144,
+              20
+            ]
+          }
+        ],
+        "peak_memory_gb": 0.282797,
+        "transitions_per_second_p50": 671211337.6291625,
+        "walks_per_second_p50": 33560566.881458126,
+        "warmup": 10
+      }
+    }
+  ]
+}

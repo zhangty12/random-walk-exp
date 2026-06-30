@@ -34,8 +34,8 @@ __global__ void fill_edge_rows_kernel(
 }
 
 struct RowColLess {
-    template <typename Tuple>
-    __host__ __device__ bool operator()(const Tuple& lhs, const Tuple& rhs) const {
+    template <typename LhsTuple, typename RhsTuple>
+    __host__ __device__ bool operator()(const LhsTuple& lhs, const RhsTuple& rhs) const {
         const int64_t lhs_row = thrust::get<0>(lhs);
         const int64_t rhs_row = thrust::get<0>(rhs);
         if (lhs_row < rhs_row) {

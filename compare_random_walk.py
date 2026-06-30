@@ -67,6 +67,29 @@ def environment_info(torch: Any, device: Any) -> Dict[str, Any]:
     }
 
 
+def modes_with_available_optional_backends(
+    modes: Sequence[str],
+    env: Dict[str, Any],
+) -> List[str]:
+    selected = list(modes)
+    if "library" not in selected or env.get("torch_cluster") is not None:
+        return selected
+
+    remaining = [mode for mode in selected if mode != "library"]
+    if not remaining:
+        raise SystemExit(
+            "torch_cluster is required for mode 'library', but it is not installed. "
+            "Install a torch_cluster wheel matching this PyTorch/CUDA build or run "
+            "with a non-library mode such as '--modes adaptive'."
+        )
+
+    print(
+        "\nSkipping mode 'library': torch_cluster is not installed. "
+        "Running modes: %s" % ", ".join(remaining)
+    )
+    return remaining
+
+
 def synchronize(torch: Any, device: Any) -> None:
     if device.type == "cuda":
         torch.cuda.synchronize(device)
@@ -453,6 +476,7 @@ def main() -> None:
 
     bench_cfg = config.get("benchmark", {})
     modes = list(bench_cfg.get("modes", ["library", "adaptive"]))
+    modes = modes_with_available_optional_backends(modes, env)
     warmup = int(bench_cfg.get("warmup", 10))
     iters = int(bench_cfg.get("iters", 50))
     walk_length = int(bench_cfg.get("walk_length", 20))

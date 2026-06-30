@@ -20,6 +20,7 @@ from compare_random_walk import (
     make_device,
     make_library_callable,
     make_starts,
+    modes_with_available_optional_backends,
     output_description,
     print_summary,
     row_col_to_rowptr,
@@ -368,6 +369,7 @@ def main() -> None:
     env = environment_info(torch, device)
     print("Environment:")
     print(json.dumps(env, indent=2, sort_keys=True))
+    args.modes = modes_with_available_optional_backends(args.modes, env)
 
     edge_list_path, dataset_source, graph_name = resolve_edge_list(args)
     make_undirected = not bool(args.directed)

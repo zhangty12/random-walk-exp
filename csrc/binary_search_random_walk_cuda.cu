@@ -12,7 +12,7 @@
 
 namespace {
 
-constexpr int kThreads = 256;
+constexpr int kThreads = 1024;
 
 __global__ void fill_edge_rows_kernel(
     const int64_t* __restrict__ rowptr,

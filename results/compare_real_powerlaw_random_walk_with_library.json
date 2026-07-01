@@ -56,7 +56,7 @@
     "cuda_device_name": "NVIDIA A100-PCIE-40GB",
     "cuda_total_memory_gb": 39.516,
     "device": "cuda:0",
-    "timestamp": "2026-06-30T13:25:27",
+    "timestamp": "2026-07-01T08:32:50",
     "torch": "2.11.0+cu128",
     "torch_cluster": "1.6.3+pt211cu128",
     "torch_cuda": "12.8"
@@ -93,7 +93,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -104,21 +104,21 @@
         "num_starts": 262144,
         "p": 1.0,
         "q": 1.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "library",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 0.6062080264091492,
-        "latency_ms_mean": 0.5983232057094574,
-        "latency_ms_min": 0.5949440002441406,
-        "latency_ms_p50": 0.5980160236358643,
-        "latency_ms_p90": 0.6010879874229431,
-        "latency_ms_p95": 0.6032384037971497,
-        "latency_ms_p99": 0.6062080264091492,
-        "latency_ms_std": 0.0024080305838215877,
+        "latency_ms_max": 0.6082559823989868,
+        "latency_ms_mean": 0.5986303973197937,
+        "latency_ms_min": 0.5959680080413818,
+        "latency_ms_p50": 0.5985279977321625,
+        "latency_ms_p90": 0.600166380405426,
+        "latency_ms_p95": 0.6010879874229431,
+        "latency_ms_p99": 0.6047436648607254,
+        "latency_ms_std": 0.0019855981078555156,
         "output": [
           {
             "device": "cuda:0",
@@ -138,8 +138,8 @@
           }
         ],
         "peak_memory_gb": 0.282797,
-        "transitions_per_second_p50": 8767122941.161226,
-        "walks_per_second_p50": 438356147.05806136,
+        "transitions_per_second_p50": 8759623643.113443,
+        "walks_per_second_p50": 437981182.1556722,
         "warmup": 10
       }
     },
@@ -154,7 +154,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -165,21 +165,21 @@
         "num_starts": 262144,
         "p": 1.0,
         "q": 1.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "adaptive",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 1.669119954109192,
-        "latency_ms_mean": 1.5724134421348572,
-        "latency_ms_min": 1.341439962387085,
-        "latency_ms_p50": 1.6189440488815308,
-        "latency_ms_p90": 1.6540671586990356,
-        "latency_ms_p95": 1.6631808280944824,
-        "latency_ms_p99": 1.669119954109192,
-        "latency_ms_std": 0.10864136222970917,
+        "latency_ms_max": 1.7326079607009888,
+        "latency_ms_mean": 1.5403622436523436,
+        "latency_ms_min": 1.3742079734802246,
+        "latency_ms_p50": 1.6005120277404785,
+        "latency_ms_p90": 1.6676864504814148,
+        "latency_ms_p95": 1.6845312058925628,
+        "latency_ms_p99": 1.728593908548355,
+        "latency_ms_std": 0.1235680487834058,
         "output": [
           {
             "device": "cuda:0",
@@ -199,8 +199,8 @@
           }
         ],
         "peak_memory_gb": 0.282797,
-        "transitions_per_second_p50": 3238456575.211549,
-        "walks_per_second_p50": 161922828.76057744,
+        "transitions_per_second_p50": 3275751702.660824,
+        "walks_per_second_p50": 163787585.1330412,
         "warmup": 10
       }
     },
@@ -215,7 +215,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -226,21 +226,21 @@
         "num_starts": 262144,
         "p": 0.25,
         "q": 4.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "library",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 284.4436340332031,
-        "latency_ms_mean": 209.19576629638672,
-        "latency_ms_min": 157.15533447265625,
-        "latency_ms_p50": 198.73792266845703,
-        "latency_ms_p90": 268.0818695068359,
-        "latency_ms_p95": 276.7993255615234,
-        "latency_ms_p99": 284.16465942382814,
-        "latency_ms_std": 39.60107355322869,
+        "latency_ms_max": 274.2763671875,
+        "latency_ms_mean": 204.34898986816407,
+        "latency_ms_min": 152.94053649902344,
+        "latency_ms_p50": 201.48992156982422,
+        "latency_ms_p90": 259.48333740234375,
+        "latency_ms_p95": 266.8591598510742,
+        "latency_ms_p99": 273.9406884765625,
+        "latency_ms_std": 32.79747211008565,
         "output": [
           {
             "device": "cuda:0",
@@ -260,8 +260,8 @@
           }
         ],
         "peak_memory_gb": 0.362875,
-        "transitions_per_second_p50": 26380873.512230445,
-        "walks_per_second_p50": 1319043.675611522,
+        "transitions_per_second_p50": 26020557.053932518,
+        "walks_per_second_p50": 1301027.852696626,
         "warmup": 10
       }
     },
@@ -276,7 +276,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -287,21 +287,21 @@
         "num_starts": 262144,
         "p": 0.25,
         "q": 4.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "adaptive",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 16.123903274536133,
-        "latency_ms_mean": 15.613173713684082,
-        "latency_ms_min": 15.351807594299316,
-        "latency_ms_p50": 15.516160011291504,
-        "latency_ms_p90": 15.920742225646972,
-        "latency_ms_p95": 15.99487943649292,
-        "latency_ms_p99": 16.07422924041748,
-        "latency_ms_std": 0.2174035921046489,
+        "latency_ms_max": 17.117183685302734,
+        "latency_ms_mean": 17.04071174621582,
+        "latency_ms_min": 16.952320098876953,
+        "latency_ms_p50": 17.03321647644043,
+        "latency_ms_p90": 17.10622787475586,
+        "latency_ms_p95": 17.111040115356445,
+        "latency_ms_p99": 17.115678977966308,
+        "latency_ms_std": 0.038593019542087006,
         "output": [
           {
             "device": "cuda:0",
@@ -321,8 +321,8 @@
           }
         ],
         "peak_memory_gb": 0.282797,
-        "transitions_per_second_p50": 337898036.3817222,
-        "walks_per_second_p50": 16894901.819086112,
+        "transitions_per_second_p50": 307803285.8474918,
+        "walks_per_second_p50": 15390164.292374589,
         "warmup": 10
       }
     },
@@ -337,7 +337,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -348,21 +348,21 @@
         "num_starts": 262144,
         "p": 1.0,
         "q": 2.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "library",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 21.923839569091797,
-        "latency_ms_mean": 21.17197826385498,
-        "latency_ms_min": 18.24460792541504,
-        "latency_ms_p50": 21.786624908447266,
-        "latency_ms_p90": 21.86250171661377,
-        "latency_ms_p95": 21.901516723632813,
-        "latency_ms_p99": 21.91731698989868,
-        "latency_ms_std": 1.3190704214286164,
+        "latency_ms_max": 27.37664031982422,
+        "latency_ms_mean": 26.054246292114257,
+        "latency_ms_min": 24.4531192779541,
+        "latency_ms_p50": 26.897920608520508,
+        "latency_ms_p90": 27.2212984085083,
+        "latency_ms_p95": 27.28857660293579,
+        "latency_ms_p99": 27.363594226837158,
+        "latency_ms_std": 1.189960084463674,
         "output": [
           {
             "device": "cuda:0",
@@ -382,8 +382,8 @@
           }
         ],
         "peak_memory_gb": 0.362875,
-        "transitions_per_second_p50": 240646728.07430547,
-        "walks_per_second_p50": 12032336.403715275,
+        "transitions_per_second_p50": 194917669.52197793,
+        "walks_per_second_p50": 9745883.476098897,
         "warmup": 10
       }
     },
@@ -398,7 +398,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -409,21 +409,21 @@
         "num_starts": 262144,
         "p": 1.0,
         "q": 2.0,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "adaptive",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 7.896063804626465,
-        "latency_ms_mean": 7.7828710079193115,
-        "latency_ms_min": 7.622655868530273,
-        "latency_ms_p50": 7.797759771347046,
-        "latency_ms_p90": 7.844966316223145,
-        "latency_ms_p95": 7.859148907661438,
-        "latency_ms_p99": 7.889039344787598,
-        "latency_ms_std": 0.06269665211148538,
+        "latency_ms_max": 8.357888221740723,
+        "latency_ms_mean": 8.314716186523437,
+        "latency_ms_min": 8.285183906555176,
+        "latency_ms_p50": 8.310784339904785,
+        "latency_ms_p90": 8.344780731201173,
+        "latency_ms_p95": 8.348774337768555,
+        "latency_ms_p99": 8.35688446044922,
+        "latency_ms_std": 0.019179553910814343,
         "output": [
           {
             "device": "cuda:0",
@@ -443,8 +443,8 @@
           }
         ],
         "peak_memory_gb": 0.282797,
-        "transitions_per_second_p50": 672357209.4725232,
-        "walks_per_second_p50": 33617860.47362616,
+        "transitions_per_second_p50": 630852610.9654852,
+        "walks_per_second_p50": 31542630.54827426,
         "warmup": 10
       }
     },
@@ -459,7 +459,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -470,21 +470,21 @@
         "num_starts": 262144,
         "p": 4.0,
         "q": 0.25,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "library",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 12.103679656982422,
-        "latency_ms_mean": 11.846533088684081,
-        "latency_ms_min": 11.689984321594238,
-        "latency_ms_p50": 11.836416244506836,
-        "latency_ms_p90": 12.020121955871582,
-        "latency_ms_p95": 12.068249464035034,
-        "latency_ms_p99": 12.093142967224122,
-        "latency_ms_std": 0.10392796350909013,
+        "latency_ms_max": 11.931648254394531,
+        "latency_ms_mean": 11.809914836883545,
+        "latency_ms_min": 11.713536262512207,
+        "latency_ms_p50": 11.799551963806152,
+        "latency_ms_p90": 11.885465908050538,
+        "latency_ms_p95": 11.903641271591187,
+        "latency_ms_p99": 11.928637437820434,
+        "latency_ms_std": 0.05214743777800417,
         "output": [
           {
             "device": "cuda:0",
@@ -504,8 +504,8 @@
           }
         ],
         "peak_memory_gb": 0.362875,
-        "transitions_per_second_p50": 442944882.2766071,
-        "walks_per_second_p50": 22147244.113830354,
+        "transitions_per_second_p50": 444328735.1996047,
+        "walks_per_second_p50": 22216436.759980235,
         "warmup": 10
       }
     },
@@ -520,7 +520,7 @@
         "degree_p95": 117.0,
         "degree_p99": 264.0,
         "edge_list": "data/real_powerlaw/twitter_combined.txt.gz",
-        "graph_build_seconds": 5.211578702088445,
+        "graph_build_seconds": 5.237881276989356,
         "graph_name": "twitter_combined",
         "graph_type": "real_power_law",
         "keep_duplicates": false,
@@ -531,21 +531,21 @@
         "num_starts": 262144,
         "p": 4.0,
         "q": 0.25,
-        "sort_csr_ms": 10.535840034484863,
+        "sort_csr_ms": 12.233504295349121,
         "start_mode": "random",
         "walk_length": 20
       },
       "mode": "adaptive",
       "stats": {
         "iters": 50,
-        "latency_ms_max": 8.024064064025879,
-        "latency_ms_mean": 7.85319935798645,
-        "latency_ms_min": 7.7506561279296875,
-        "latency_ms_p50": 7.838719844818115,
-        "latency_ms_p90": 7.953100776672363,
-        "latency_ms_p95": 7.97096962928772,
-        "latency_ms_p99": 8.004495391845703,
-        "latency_ms_std": 0.06852023277782758,
+        "latency_ms_max": 8.462335586547852,
+        "latency_ms_mean": 8.437309455871581,
+        "latency_ms_min": 8.41113567352295,
+        "latency_ms_p50": 8.436736106872559,
+        "latency_ms_p90": 8.456192016601562,
+        "latency_ms_p95": 8.459469079971313,
+        "latency_ms_p99": 8.461834173202515,
+        "latency_ms_std": 0.012202660646920672,
         "output": [
           {
             "device": "cuda:0",
@@ -565,8 +565,8 @@
           }
         ],
         "peak_memory_gb": 0.282797,
-        "transitions_per_second_p50": 668843906.1214659,
-        "walks_per_second_p50": 33442195.306073297,
+        "transitions_per_second_p50": 621434632.2541907,
+        "walks_per_second_p50": 31071731.612709533,
         "warmup": 10
       }
     }
